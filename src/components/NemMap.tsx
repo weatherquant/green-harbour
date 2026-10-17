@@ -4,88 +4,161 @@ import { assets } from "@/lib/demo-data";
 
 export default function NemMap() {
   return (
-    <div className="relative h-[430px] overflow-hidden rounded-3xl border border-white/10 bg-[#080808]">
-      <div className="absolute left-6 top-6 z-10">
+    <div className="nem-map">
+      <div className="absolute left-7 top-7 z-20">
         <p className="eyebrow">PORTFOLIO FOOTPRINT</p>
-        <h3 className="mt-2 text-xl font-medium">Australian NEM</h3>
+
+        <h2 className="mt-2 text-lg font-medium tracking-[-0.02em]">
+          National Electricity Market
+        </h2>
       </div>
 
-      <div className="absolute inset-x-[12%] bottom-[7%] top-[16%]">
+      <div className="absolute inset-x-[8%] bottom-[8%] top-[18%]">
         <svg
-          viewBox="0 0 100 100"
+          viewBox="0 0 500 600"
           className="absolute inset-0 h-full w-full"
-          preserveAspectRatio="none"
+          aria-label="Stylised map of the Australian National Electricity Market"
         >
+          {/* Queensland */}
           <path
-            d="M64 5
-               C73 11 78 21 76 31
-               C75 39 80 47 78 57
-               C76 66 69 75 62 82
-               C56 88 48 91 39 87
-               C31 83 28 76 27 69
-               C34 68 40 65 45 61
-               C51 55 54 47 55 38
-               C56 27 58 15 64 5Z"
-            fill="rgba(255,255,255,0.025)"
-            stroke="rgba(255,255,255,0.16)"
-            strokeWidth="0.7"
+            d="M280 35
+               L355 62
+               L395 118
+               L382 190
+               L347 246
+               L274 240
+               L264 158
+               Z"
+            className="map-land"
           />
 
+          {/* New South Wales */}
           <path
-            d="M55 38 C62 39 69 39 76 36"
-            fill="none"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.5"
+            d="M274 240
+               L347 246
+               L385 294
+               L365 362
+               L283 371
+               L252 322
+               Z"
+            className="map-land"
           />
 
+          {/* Victoria */}
           <path
-            d="M45 61 C55 62 66 61 78 57"
-            fill="none"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.5"
+            d="M283 371
+               L365 362
+               L349 419
+               L306 448
+               L255 416
+               Z"
+            className="map-land"
           />
 
+          {/* South Australia */}
           <path
-            d="M39 87 C43 78 45 69 45 61"
-            fill="none"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.5"
+            d="M171 276
+               L252 322
+               L283 371
+               L255 416
+               L184 397
+               L149 347
+               Z"
+            className="map-land"
           />
+
+          {/* Tasmania */}
+          <path
+            d="M296 486
+               L337 478
+               L353 513
+               L326 548
+               L294 529
+               Z"
+            className="map-land"
+          />
+
+          <text x="310" y="150" className="fill-[var(--muted)] text-[12px]">
+            QLD
+          </text>
+
+          <text x="315" y="310" className="fill-[var(--muted)] text-[12px]">
+            NSW
+          </text>
+
+          <text x="299" y="407" className="fill-[var(--muted)] text-[12px]">
+            VIC
+          </text>
+
+          <text x="191" y="351" className="fill-[var(--muted)] text-[12px]">
+            SA
+          </text>
+
+          <text x="315" y="518" className="fill-[var(--muted)] text-[12px]">
+            TAS
+          </text>
         </svg>
 
         {assets.map((asset) => (
-          <div
+          <button
             key={asset.id}
-            className="group absolute"
+            className="asset-marker group"
             style={{
               left: `${asset.mapX}%`,
               top: `${asset.mapY}%`,
             }}
+            aria-label={asset.name}
           >
-            <div className="relative">
-              <div className="absolute -inset-3 animate-pulse rounded-full bg-white/10" />
-              <div className="relative h-3 w-3 rounded-full border border-black bg-white" />
+            <span className="asset-marker-ring" />
+            <span className="asset-marker-dot" />
 
-              <div className="pointer-events-none absolute left-5 top-1/2 w-max -translate-y-1/2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                <div className="rounded-xl border border-white/10 bg-black/90 px-3 py-2 backdrop-blur">
-                  <p className="text-xs font-medium text-white">
-                    {asset.name}
-                  </p>
-                  <p className="mt-1 text-[10px] text-neutral-500">
-                    {asset.powerMW} MW / {asset.capacityMWh} MWh
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            <span className="map-tooltip pointer-events-none absolute left-5 top-1/2 z-30 w-52 -translate-y-1/2 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
+              <span className="block text-left">
+                <span className="block text-[8px] tracking-[0.16em] text-muted">
+                  {asset.region}
+                </span>
+
+                <span className="mt-1 block text-sm font-medium">
+                  {asset.name}
+                </span>
+
+                <span className="mt-4 grid grid-cols-2 gap-3">
+                  <span>
+                    <span className="metric-label block">SIZE</span>
+                    <span className="mt-1 block text-[11px]">
+                      {asset.powerMW} MW
+                    </span>
+                  </span>
+
+                  <span>
+                    <span className="metric-label block">STORAGE</span>
+                    <span className="mt-1 block text-[11px]">
+                      {asset.capacityMWh} MWh
+                    </span>
+                  </span>
+
+                  <span>
+                    <span className="metric-label block">VALUE</span>
+                    <span className="mt-1 block text-[11px]">
+                      ${asset.value}m
+                    </span>
+                  </span>
+
+                  <span>
+                    <span className="metric-label block">YTD RETURN</span>
+                    <span className="mt-1 block text-[11px]">
+                      {asset.ytdReturn.toFixed(1)}%
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </button>
         ))}
       </div>
 
-      <div className="absolute bottom-5 left-6 flex gap-6 text-[10px] uppercase tracking-[0.18em] text-neutral-600">
-        <span>QLD</span>
-        <span>NSW</span>
-        <span>VIC</span>
-        <span>SA</span>
+      <div className="absolute bottom-6 left-7 text-[8px] tracking-[0.14em] text-muted">
+        OWNED ASSETS · DEMONSTRATION LOCATIONS
       </div>
     </div>
   );

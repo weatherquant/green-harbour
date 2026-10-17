@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  Area,
-  AreaChart,
+  Line,
+  LineChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
@@ -14,21 +14,14 @@ import { performance } from "@/lib/demo-data";
 
 export default function PerformanceChart() {
   return (
-    <div className="h-[310px] w-full">
+    <div className="h-[330px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
+        <LineChart
           data={performance}
-          margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+          margin={{ top: 15, right: 12, left: -20, bottom: 0 }}
         >
-          <defs>
-            <linearGradient id="portfolioFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity={0.16} />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-
           <CartesianGrid
-            stroke="rgba(255,255,255,0.06)"
+            stroke="var(--chart-grid)"
             vertical={false}
           />
 
@@ -36,42 +29,60 @@ export default function PerformanceChart() {
             dataKey="date"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#737373", fontSize: 11 }}
+            tick={{
+              fill: "var(--muted)",
+              fontSize: 10,
+            }}
           />
 
           <YAxis
             domain={["dataMin - 2", "dataMax + 2"]}
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#737373", fontSize: 11 }}
+            tick={{
+              fill: "var(--muted)",
+              fontSize: 10,
+            }}
           />
 
           <Tooltip
             contentStyle={{
-              background: "#0a0a0a",
-              border: "1px solid #262626",
-              borderRadius: "12px",
-              color: "#fff",
+              background: "var(--tooltip-bg)",
+              border: "1px solid var(--border)",
+              borderRadius: "10px",
+              color: "var(--foreground)",
+              boxShadow: "var(--tooltip-shadow)",
+              fontSize: "12px",
             }}
           />
 
-          <Area
+          <Line
             type="monotone"
             dataKey="portfolio"
-            stroke="#ffffff"
-            strokeWidth={2}
-            fill="url(#portfolioFill)"
+            stroke="var(--chart-primary)"
+            strokeWidth={2.4}
+            dot={false}
+            activeDot={{ r: 4 }}
           />
 
-          <Area
+          <Line
+            type="monotone"
+            dataKey="underwriting"
+            stroke="var(--chart-underwriting)"
+            strokeWidth={1.5}
+            strokeDasharray="2 4"
+            dot={false}
+          />
+
+          <Line
             type="monotone"
             dataKey="benchmark"
-            stroke="#666666"
-            strokeWidth={1.5}
-            strokeDasharray="5 5"
-            fill="transparent"
+            stroke="var(--chart-benchmark)"
+            strokeWidth={1.3}
+            strokeDasharray="7 6"
+            dot={false}
           />
-        </AreaChart>
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );

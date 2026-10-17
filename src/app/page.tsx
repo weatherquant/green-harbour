@@ -1,281 +1,338 @@
-"use client";
-
-import { useState } from "react";
+import Link from "next/link";
 import {
-  ArrowUpRight,
+  ArrowRight,
+  BarChart3,
   BatteryCharging,
-  ChevronRight,
-  Circle,
-  MapPin,
+  Map,
+  ShieldCheck,
 } from "lucide-react";
 
-import NemMap from "@/components/NemMap";
-import PerformanceChart from "@/components/PerformanceChart";
+import PublicHeader from "@/components/PublicHeader";
+import PublicAustraliaMap from "@/components/PublicAustraliaMap";
 import { assets, opportunities } from "@/lib/demo-data";
 
-const periods = ["1D", "1M", "QTR", "YTD", "1Y", "ALL"];
-
 export default function Home() {
-  const [period, setPeriod] = useState("YTD");
-
-  const nav = assets.reduce(
-    (sum, asset) => sum + asset.value,
-    0
-  );
-
-  const totalMW = assets.reduce(
-    (sum, asset) => sum + asset.powerMW,
-    0
-  );
-
+  const totalMW = assets.reduce((sum, asset) => sum + asset.powerMW, 0);
   const totalMWh = assets.reduce(
     (sum, asset) => sum + asset.capacityMWh,
     0
   );
 
-  const revenue = assets.reduce(
-    (sum, asset) => sum + asset.revenueLTM,
-    0
-  );
-
   return (
-    <main className="min-h-screen bg-black text-white">
-      <header className="border-b border-white/10">
-        <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-6 lg:px-10">
-          <div>
-            <div className="text-sm font-semibold tracking-[0.22em]">
-              GREEN HARBOUR
-            </div>
-            <div className="mt-1 text-[9px] tracking-[0.28em] text-neutral-600">
-              ENERGY
-            </div>
-          </div>
+    <main className="min-h-screen bg-[#f7f7f2] text-[#161914]">
+      <PublicHeader />
 
-          <nav className="hidden items-center gap-8 text-xs text-neutral-500 md:flex">
-            <button className="text-white">Portfolio</button>
-            <button>Assets</button>
-            <button>Opportunities</button>
-            <button>Market</button>
-          </nav>
+      {/* HERO */}
+      <section className="relative overflow-hidden pt-[78px]">
+        <div className="absolute -right-32 -top-28 h-[430px] w-[650px] rotate-[-12deg] rounded-[100%] bg-[#dce8df] opacity-70 blur-3xl" />
 
-          <div className="flex items-center gap-2 text-[10px] tracking-[0.16em] text-neutral-500">
-            <Circle className="h-2 w-2 fill-white text-white" />
-            DEMO
-          </div>
-        </div>
-      </header>
+        <div className="mx-auto grid min-h-[760px] max-w-[1500px] lg:grid-cols-[0.78fr_1.22fr]">
+          <div className="relative z-10 flex flex-col justify-center px-6 py-20 lg:px-10">
+            <p className="text-[9px] tracking-[0.22em] text-[#657168]">
+              AUSTRALIAN BATTERY INFRASTRUCTURE
+            </p>
 
-      <div className="mx-auto max-w-[1500px] px-6 py-10 lg:px-10 lg:py-14">
-        <section className="mb-14">
-          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-            <div>
-              <p className="eyebrow">AUSTRALIAN BATTERY INFRASTRUCTURE</p>
-
-              <h1 className="mt-5 max-w-4xl text-4xl font-medium tracking-[-0.04em] md:text-6xl">
-                Portfolio
-                <span className="text-neutral-600"> performance.</span>
-              </h1>
-            </div>
-
-            <div className="text-left lg:text-right">
-              <p className="text-xs text-neutral-600">PORTFOLIO NAV</p>
-              <p className="mt-2 text-3xl font-medium">
-                ${nav.toFixed(1)}m
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 lg:grid-cols-[0.72fr_1.28fr]">
-          <div className="bg-[#070707] p-7 md:p-9">
-            <p className="eyebrow">YTD RETURN</p>
-
-            <div className="mt-6 flex items-start gap-3">
-              <span className="text-6xl font-medium tracking-[-0.06em] md:text-7xl">
-                14.8
+            <h1 className="mt-7 max-w-[640px] text-5xl font-medium leading-[0.98] tracking-[-0.055em] md:text-7xl">
+              Investing in the
+              <span className="block text-[#66736a]">
+                infrastructure
               </span>
-              <span className="mt-2 text-xl text-neutral-500">%</span>
+              behind Australia&apos;s
+              <span className="block text-[#174735]">
+                energy transition.
+              </span>
+            </h1>
+
+            <p className="mt-8 max-w-[510px] text-[15px] leading-7 text-[#626960]">
+              Green Harbour Energy invests in distributed battery infrastructure across 
+              Australian electricity markets, combining disciplined investment underwriting 
+              with active asset ownership.
+            </p>
+
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a
+                href="#strategy"
+                className="flex items-center gap-3 rounded-full bg-[#173f32] px-5 py-3 text-[10px] font-medium tracking-[0.08em] text-white"
+              >
+                OUR STRATEGY
+                <ArrowRight className="h-3 w-3" />
+              </a>
+
+              <Link
+                href="/platform"
+                className="flex items-center gap-3 rounded-full border border-[#cbd0c9] bg-white px-5 py-3 text-[10px] font-medium tracking-[0.08em]"
+              >
+                INVESTOR PLATFORM
+              </Link>
             </div>
 
-            <div className="mt-8 border-t border-white/10 pt-6">
-              <div className="flex justify-between">
-                <span className="metric-label">Benchmark</span>
-                <span className="text-sm">11.2%</span>
-              </div>
-
-              <div className="mt-4 flex justify-between">
-                <span className="metric-label">Alpha</span>
-                <span className="text-sm">+3.6%</span>
-              </div>
-
-              <div className="mt-4 flex justify-between">
-                <span className="metric-label">MOIC</span>
-                <span className="text-sm">1.42x</span>
-              </div>
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-2">
-              {periods.map((item) => (
-                <button
-                  key={item}
-                  onClick={() => setPeriod(item)}
-                  className={`rounded-full px-3 py-1.5 text-[10px] transition ${
-                    period === item
-                      ? "bg-white text-black"
-                      : "text-neutral-600 hover:text-white"
-                  }`}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-[#070707] p-7 md:p-9">
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mt-16 grid max-w-[520px] grid-cols-3 border-t border-[#d7dad4] pt-7">
               <div>
-                <p className="eyebrow">PERFORMANCE</p>
-                <p className="mt-2 text-sm text-neutral-500">
-                  Green Harbour vs portfolio benchmark
+                <p className="text-2xl tracking-[-0.04em]">
+                  {assets.length}
+                </p>
+                <p className="mt-1 text-[8px] tracking-[0.15em] text-[#7c837c]">
+                  ASSETS
                 </p>
               </div>
 
-              <div className="hidden items-center gap-5 text-[10px] text-neutral-500 sm:flex">
-                <span className="flex items-center gap-2">
-                  <span className="h-px w-5 bg-white" />
-                  Portfolio
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="h-px w-5 bg-neutral-600" />
-                  Benchmark
-                </span>
-              </div>
-            </div>
-
-            <PerformanceChart />
-          </div>
-        </section>
-
-        <section className="my-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-4">
-          {[
-            ["ASSETS", `${assets.length}`],
-            ["CAPACITY", `${totalMW} MW`],
-            ["STORAGE", `${totalMWh} MWh`],
-            ["LTM REVENUE", `$${revenue.toFixed(1)}m`],
-          ].map(([label, value]) => (
-            <div key={label} className="bg-black p-6 md:p-8">
-              <p className="metric-label">{label}</p>
-              <p className="mt-3 text-2xl tracking-[-0.03em]">{value}</p>
-            </div>
-          ))}
-        </section>
-
-        <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <NemMap />
-
-          <div className="overflow-hidden rounded-3xl border border-white/10">
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-6">
               <div>
-                <p className="eyebrow">OWNED ASSETS</p>
-                <h2 className="mt-2 text-xl">Portfolio holdings</h2>
+                <p className="text-2xl tracking-[-0.04em]">
+                  {totalMW} MW
+                </p>
+                <p className="mt-1 text-[8px] tracking-[0.15em] text-[#7c837c]">
+                  CAPACITY
+                </p>
               </div>
 
-              <BatteryCharging className="h-5 w-5 text-neutral-600" />
-            </div>
-
-            <div>
-              {assets.map((asset) => (
-                <button
-                  key={asset.id}
-                  className="group grid w-full grid-cols-[1fr_auto] items-center gap-5 border-b border-white/10 px-6 py-5 text-left transition hover:bg-white/[0.035] last:border-0 md:grid-cols-[1.5fr_.55fr_.55fr_.55fr_auto]"
-                >
-                  <div>
-                    <p className="text-sm">{asset.name}</p>
-                    <p className="mt-1 flex items-center gap-1 text-[10px] text-neutral-600">
-                      <MapPin className="h-3 w-3" />
-                      {asset.location}
-                    </p>
-                  </div>
-
-                  <div className="hidden md:block">
-                    <p className="metric-label">VALUE</p>
-                    <p className="mt-1 text-sm">${asset.value}m</p>
-                  </div>
-
-                  <div className="hidden md:block">
-                    <p className="metric-label">YTD</p>
-                    <p className="mt-1 text-sm">{asset.ytdReturn}%</p>
-                  </div>
-
-                  <div className="hidden md:block">
-                    <p className="metric-label">ALPHA</p>
-                    <p className="mt-1 text-sm">
-                      +{(asset.ytdReturn - asset.benchmarkReturn).toFixed(1)}%
-                    </p>
-                  </div>
-
-                  <ChevronRight className="h-4 w-4 text-neutral-700 transition group-hover:translate-x-1 group-hover:text-white" />
-                </button>
-              ))}
+              <div>
+                <p className="text-2xl tracking-[-0.04em]">
+                  {totalMWh} MWh
+                </p>
+                <p className="mt-1 text-[8px] tracking-[0.15em] text-[#7c837c]">
+                  STORAGE
+                </p>
+              </div>
             </div>
           </div>
-        </section>
 
-        <section className="mt-20">
-          <div className="mb-7 flex items-end justify-between">
+          <div className="relative flex items-center justify-center px-4 lg:px-0">
+            <PublicAustraliaMap />
+          </div>
+        </div>
+      </section>
+
+      {/* STRATEGY */}
+      <section
+        id="strategy"
+        className="border-y border-[#d9ddd6] bg-white"
+      >
+        <div className="mx-auto max-w-[1500px] px-6 py-24 lg:px-10">
+          <div className="grid gap-14 lg:grid-cols-[0.7fr_1.3fr]">
             <div>
-              <p className="eyebrow">PIPELINE</p>
-              <h2 className="mt-3 text-3xl tracking-[-0.04em]">
-                Investment opportunities
+              <p className="text-[9px] tracking-[0.2em] text-[#758078]">
+                INVESTMENT STRATEGY
+              </p>
+
+              <h2 className="mt-5 text-4xl tracking-[-0.045em]">
+                Small assets.
+                <br />
+                Institutional discipline.
               </h2>
             </div>
 
-            <p className="hidden text-xs text-neutral-600 md:block">
-              $31.4m potential investment
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-[#daddd7] bg-[#daddd7] md:grid-cols-2">
+              {[
+                {
+                  icon: BatteryCharging,
+                  title: "Distributed BESS",
+                  text: "Targeted investment in smaller-scale battery assets across the National Electricity Market.",
+                },
+                {
+                  icon: Map,
+                  title: "Regional diversification",
+                  text: "Portfolio construction across NEM regions to diversify market and operating exposures.",
+                },
+                {
+                  icon: BarChart3,
+                  title: "Investment discipline",
+                  text: "Asset-level underwriting, performance attribution and active comparison against the investment case.",
+                },
+                {
+                  icon: ShieldCheck,
+                  title: "Active ownership",
+                  text: "Ongoing oversight of asset economics, operating performance, valuation and investment risk.",
+                },
+              ].map(({ icon: Icon, title, text }) => (
+                <div key={title} className="bg-[#fafaf7] p-8">
+                  <Icon className="h-5 w-5 text-[#315b49]" />
+
+                  <h3 className="mt-8 text-lg font-medium">
+                    {title}
+                  </h3>
+
+                  <p className="mt-3 max-w-sm text-[12px] leading-6 text-[#717770]">
+                    {text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PORTFOLIO */}
+      <section
+        id="portfolio"
+        className="mx-auto max-w-[1500px] px-6 py-24 lg:px-10"
+      >
+        <div className="mb-10 flex items-end justify-between">
+          <div>
+            <p className="text-[9px] tracking-[0.2em] text-[#758078]">
+              PORTFOLIO
+            </p>
+
+            <h2 className="mt-4 text-4xl tracking-[-0.045em]">
+              Australian battery infrastructure
+            </h2>
+          </div>
+
+          <Link
+            href="/platform"
+            className="hidden items-center gap-2 text-[10px] font-medium text-[#315b49] md:flex"
+          >
+            VIEW INVESTMENT PLATFORM
+            <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+
+        <div className="overflow-hidden rounded-2xl border border-[#d9ddd6] bg-white">
+          {assets.map((asset) => (
+            <Link
+              key={asset.id}
+              href={`/assets/${asset.id}`}
+              className="group grid grid-cols-[1fr_auto] items-center border-b border-[#e1e3de] px-6 py-6 transition hover:bg-[#f1f4ef] last:border-0 md:grid-cols-[1.4fr_.5fr_.6fr_.5fr_auto]"
+            >
+              <div>
+                <p className="text-[13px] font-medium">
+                  {asset.name}
+                </p>
+                <p className="mt-1 text-[9px] text-[#858b84]">
+                  {asset.location}
+                </p>
+              </div>
+
+              <div className="hidden md:block">
+                <p className="text-[8px] tracking-[0.14em] text-[#858b84]">
+                  REGION
+                </p>
+                <p className="mt-1 text-xs">{asset.region}</p>
+              </div>
+
+              <div className="hidden md:block">
+                <p className="text-[8px] tracking-[0.14em] text-[#858b84]">
+                  CONFIGURATION
+                </p>
+                <p className="mt-1 text-xs">
+                  {asset.powerMW} MW / {asset.capacityMWh} MWh
+                </p>
+              </div>
+
+              <div className="hidden md:block">
+                <p className="text-[8px] tracking-[0.14em] text-[#858b84]">
+                  STATUS
+                </p>
+                <p className="mt-1 text-xs">{asset.status}</p>
+              </div>
+
+              <ArrowRight className="h-4 w-4 text-[#929890] transition group-hover:translate-x-1 group-hover:text-[#173f32]" />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* APPROACH */}
+      <section
+        id="approach"
+        className="bg-[#16382d] text-white"
+      >
+        <div className="mx-auto grid max-w-[1500px] gap-16 px-6 py-24 lg:grid-cols-2 lg:px-10">
+          <div>
+            <p className="text-[9px] tracking-[0.2em] text-[#a8c0b4]">
+              ACTIVE OWNERSHIP
+            </p>
+
+            <h2 className="mt-5 max-w-xl text-4xl leading-tight tracking-[-0.045em] md:text-5xl">
+              Investment performance,
+              not operational noise.
+            </h2>
+          </div>
+
+          <div className="flex items-end">
+            <p className="max-w-xl text-[14px] leading-7 text-[#c7d5ce]">
+              Green Harbour evaluates each asset through the economics of
+              ownership: invested capital, revenue, cash yield, valuation,
+              return and performance relative to underwriting. Operational
+              information matters where it explains investment outcomes.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="overflow-hidden rounded-3xl border border-white/10">
-            {opportunities.map((opportunity) => (
-              <button
-                key={opportunity.id}
-                className="group grid w-full grid-cols-[1fr_auto] items-center border-b border-white/10 px-6 py-6 text-left transition hover:bg-white/[0.035] last:border-0 md:grid-cols-[1.5fr_.55fr_.55fr_.55fr_auto]"
-              >
+      {/* OPPORTUNITIES */}
+      <section
+        id="opportunities"
+        className="mx-auto max-w-[1500px] px-6 py-24 lg:px-10"
+      >
+        <p className="text-[9px] tracking-[0.2em] text-[#758078]">
+          INVESTMENT PIPELINE
+        </p>
+
+        <div className="mt-4 flex items-end justify-between">
+          <h2 className="text-4xl tracking-[-0.045em]">
+            Selected opportunities
+          </h2>
+        </div>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          {opportunities.map((opportunity) => (
+            <div
+              key={opportunity.id}
+              className="rounded-2xl border border-[#d9ddd6] bg-white p-7"
+            >
+              <span className="rounded-full bg-[#edf1ec] px-3 py-1.5 text-[8px] tracking-[0.12em] text-[#637068]">
+                {(opportunity.stage ?? "Opportunity").toUpperCase()}
+              </span>
+
+              <h3 className="mt-9 text-xl font-medium">
+                {opportunity.name}
+              </h3>
+
+              <p className="mt-2 text-[10px] text-[#858b84]">
+                {opportunity.location}
+              </p>
+
+              <div className="mt-8 grid grid-cols-3 border-t border-[#e0e3de] pt-5">
                 <div>
-                  <p className="text-sm">{opportunity.name}</p>
-                  <p className="mt-1 text-[10px] text-neutral-600">
-                    {opportunity.location}
+                  <p className="text-[8px] tracking-[0.13em] text-[#858b84]">
+                    SIZE
+                  </p>
+                  <p className="mt-2 text-xs">
+                    {opportunity.powerMW} MW
                   </p>
                 </div>
 
-                <div className="hidden md:block">
-                  <p className="metric-label">SIZE</p>
-                  <p className="mt-1 text-sm">
-                    {opportunity.powerMW} / {opportunity.capacityMWh}
+                <div>
+                  <p className="text-[8px] tracking-[0.13em] text-[#858b84]">
+                    STORAGE
+                  </p>
+                  <p className="mt-2 text-xs">
+                    {opportunity.capacityMWh} MWh
                   </p>
                 </div>
 
-                <div className="hidden md:block">
-                  <p className="metric-label">STAGE</p>
-                  <p className="mt-1 text-sm">{opportunity.stage}</p>
+                <div>
+                  <p className="text-[8px] tracking-[0.13em] text-[#858b84]">
+                    IND. IRR
+                  </p>
+                  <p className="mt-2 text-xs text-[#176044]">
+                    {opportunity.indicativeIRR.toFixed(1)}%
+                  </p>
                 </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-                <div className="hidden md:block">
-                  <p className="metric-label">IND. IRR</p>
-                  <p className="mt-1 text-sm">{opportunity.indicativeIRR}%</p>
-                </div>
-
-                <ArrowUpRight className="h-4 w-4 text-neutral-700 transition group-hover:text-white" />
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <footer className="mt-20 flex flex-col justify-between gap-4 border-t border-white/10 py-8 text-[10px] tracking-[0.12em] text-neutral-700 sm:flex-row">
+      <footer className="border-t border-[#d9ddd6]">
+        <div className="mx-auto flex max-w-[1500px] flex-col justify-between gap-6 px-6 py-10 text-[9px] tracking-[0.12em] text-[#777e77] sm:flex-row lg:px-10">
           <span>GREEN HARBOUR ENERGY</span>
-          <span>INVESTMENT PLATFORM · DEMONSTRATION DATA</span>
-        </footer>
-      </div>
+          <span>
+            AUSTRALIAN BATTERY INFRASTRUCTURE INVESTMENT
+          </span>
+        </div>
+      </footer>
     </main>
   );
 }
